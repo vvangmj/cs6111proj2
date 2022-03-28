@@ -2,6 +2,7 @@ from google_search import *
 from bs4 import BeautifulSoup
 import requests
 import spacy
+from collections import defaultdict
 from spanbert import SpanBERT
 from spacy_help_functions import create_entity_pairs,calculate_confidence
 engine_id = "becd76ddad3b6ac04"
@@ -33,7 +34,20 @@ internal_name = {
 
 def retrieve_split(url):
     print("Fetching text from url ...")
-    response = requests.get(url)
+    try:
+        response = requests.get(url, timeout=20)
+    except requests.exceptions.HTTPError:
+        print("Unable to fetch url due to HTTP error. Url skipped.\n")
+        return []
+    except requests.exceptions.ConnectionError:
+        print("Unable to fetch url due to Connection error. Url skipped.\n")
+        return []
+    except requests.exceptions.Timeout:
+        print("Unable to fectch url due to timeout. Url skipped.\n")
+        return []
+    except requests.exceptions.RequestException:
+        print("Unable to fetch url due to requests error. Url skipped.\n")
+        return []
     raw_html = response.content
     soup = BeautifulSoup(raw_html, 'html.parser')
     for raw_text in soup(['style', 'script']):
@@ -53,7 +67,8 @@ def retrieve_split(url):
 
 
 def get_relation(res, doc, r_id, conf=0.7):
-
+    if not len(doc):
+        return defaultdict(int)
     spanbert = SpanBERT("./pretrained_spanbert")
     num_sentences = len([s for s in doc.sents])
     num_ext_sentences = 0
@@ -90,9 +105,9 @@ def get_relation(res, doc, r_id, conf=0.7):
                 if(res[relat]<dict_relation[relat]):
                     res[relat] = dict_relation[relat]
 
-
     print("Extracted annotations for  {}  out of total {} sentences".format(num_ext_sentences, num_sentences))
-    print("Relations extracted from this website: {} (Overall: {})".format(num_ext_relations, num_relations))
+    print("Relations extracted from this website: {} (Overall: {}) \n".format(num_ext_relations, num_relations))
+    print()
     return res
 
 

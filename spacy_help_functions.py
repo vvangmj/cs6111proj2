@@ -139,7 +139,7 @@ def calculate_confidence(examples, preds, conf, num_relations, num_ext_relations
         subj = ex["subj"][0]
         obj = ex["obj"][0]
         confidence = pred[1]
-        print("\t\tOutput Confidence: {:.3f})\tSubject: {}\tObject: {}".format(confidence, subj, obj))
+        print("\t\tOutput Confidence: {:.3f} ； Subject: {} ； Object: {}".format(confidence, subj, obj))
         num_relations += 1
         if confidence > conf:
             if ((subj, relation, obj) not in res) or (res[(subj, relation, obj)] < confidence):
