@@ -16,8 +16,8 @@
     - webpage_retrieval.py
     - spacy_help_functions.py
     - spanbert.py
-  - transcript.txt
-  - README.md
+- transcript.txt
+- README.md
 ```
 
 ## How to Run
