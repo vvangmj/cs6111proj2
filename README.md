@@ -44,9 +44,16 @@ python main.py --r <relation> --t <threshold> --q "<query>" --k <#ofTuples>
 ## Dependencies Installation
 
 - make sure your Python version is 3.8.12 or newer
-- numpy: run `pip install numpy==1.22.2`
-- sklearn: run `pip install scikit-learn==1.0.2`
+- `sudo apt update` , `sudo apt install python3-pip`
 - googleapiclient: run `pip install google-api-python-client`
+- `sudo apt-get update`
+- beautiful soup: run `pip install beautifulsoup4`
+- pip, setuptools, wheel: `pip install -U pip setuptools wheel`
+- spacy: `pip install -U spacy`
+- English pipeline: `python3 -m spacy download en_core_web_lg`
+- scipy: `pip install scipy`
+- torch: `pip install torch`
+- boto3: `pip install boto3`
 
 ## Internal Design
 
