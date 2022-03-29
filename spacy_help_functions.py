@@ -126,7 +126,7 @@ def create_entity_pairs(sents_doc, entities_of_interest, window_size=40):
                 entity_pairs.append((x, e1_info, e2_info))
     return entity_pairs
 
-def calculate_confidence(examples, preds, conf, num_relations, num_ext_relations, inter_relation):
+def filter_relation(examples, preds, conf, num_relations, num_ext_relations, inter_relation):
     res = defaultdict(int)
     for ex, pred in list(zip(examples, preds)):
         relation = pred[0]

@@ -4,7 +4,7 @@ import requests
 import spacy
 from collections import defaultdict
 from spanbert import SpanBERT
-from spacy_help_functions import create_entity_pairs,calculate_confidence
+from spacy_help_functions import create_entity_pairs,filter_relation
 engine_id = "becd76ddad3b6ac04"
 API_KEY = "AIzaSyCVc0q0-3jtaEc__0I8GORSt2339A4mRsw"
 query = "bill gates microsoft"
@@ -96,7 +96,7 @@ def get_relation(res, doc, r_id, conf=0.7):
         if len(examples) == 0:
             continue
         preds = spanbert.predict(examples)
-        relations, num_relations, num_ext_relations = calculate_confidence(examples, preds, conf, num_relations, num_ext_relations,internal_name[r_id])
+        relations, num_relations, num_ext_relations = filter_relation(examples, preds, conf, num_relations, num_ext_relations,internal_name[r_id])
         dict_relation = dict(relations)
         if dict_relation:
             num_ext_sentences += 1
